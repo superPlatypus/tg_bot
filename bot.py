@@ -47,15 +47,15 @@ def download_from_yt(message):
     url = message.text.split(' ')[1]
     #print(link)
     # YouTube(link).streams.first().download('tg_bot')
-    ydl_opts = {'outtmpl' : 'tg_bot\_video.mp4'}
+    ydl_opts = {'outtmpl' : 'yt_video.mp4'}
     URLS = [url]
-    if (os.path.exists('tg_bot\_video.mp4')):
-        os.remove('tg_bot\_video.mp4')
+    if (os.path.exists('yt_video.mp4')):
+        os.remove('yt_video.mp4')
     with YoutubeDL(ydl_opts) as ydl:
         ydl.download(URLS)
     cid = message.chat.id
     
-    bot.send_video(cid, open('tg_bot\yt_video.mp4', 'rb'))
+    bot.send_video(cid, open('yt_video.mp4', 'rb'))
 
 @bot.message_handler(commands=['tt'])
 def download_from_tiktok(message):
