@@ -28,10 +28,6 @@ def say(message):
 @bot.message_handler(commands=['joke'])
 def joke(message):
     response = requests.get('https://api.chucknorris.io/jokes/random')
-    #translator = Translator()
-    # res = translator.translate(response.json()['value'])
-    # res = translator.translate('привет').text
-    # print(res)
     bot.reply_to(message, "Original: " + response.json()['value'] + "\n" + "Translated: " + Translator().translate(response.json()['value'], dest='ru').text)
 
 
