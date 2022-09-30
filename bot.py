@@ -6,13 +6,12 @@ from pycoingecko import CoinGeckoAPI
 import requests
 import json
 import os
-from pytube import YouTube
-import youtube_dl
 from yt_dlp import YoutubeDL
 import urllib.request
 from googletrans import Translator
+import config
 
-bot = telebot.TeleBot('5435181622:AAE2BNEWaw8uBwjxKjKmUViM_1Pr5J7re9Q');
+bot = telebot.TeleBot(config.bot_token);
 cg = CoinGeckoAPI()
 
 
@@ -64,7 +63,7 @@ def download_from_tiktok(message):
     url = "https://tiktok-downloader-download-tiktok-videos-without-watermark.p.rapidapi.com/index"
     querystring = {"url":link}
     headers = {
-        "X-RapidAPI-Key": "6713ccc8b1mshcd4451e44154eabp155c8fjsn6c23347a3abc",
+        "X-RapidAPI-Key": config.X-RapidAPI-Key,
         "X-RapidAPI-Host": "tiktok-downloader-download-tiktok-videos-without-watermark.p.rapidapi.com"
     }
     response = requests.request("GET", url, headers=headers, params=querystring)
