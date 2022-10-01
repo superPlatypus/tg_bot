@@ -1,3 +1,4 @@
+import config  # Тут  были Кирилл, Семён и Егор5
 from doctest import OutputChecker
 from urllib import response
 import telebot
@@ -9,7 +10,8 @@ import os
 from yt_dlp import YoutubeDL
 import urllib.request
 from googletrans import Translator
-import config
+import random
+
 
 bot = telebot.TeleBot(config.bot_token);
 cg = CoinGeckoAPI()
@@ -17,11 +19,17 @@ cg = CoinGeckoAPI()
 
 @bot.message_handler(commands=['say'])
 def say(message):
+    bot.delete_message(message.chat.id, message.message_id)
     cid = message.chat.id
     text = message.text[4:]
     speech = gTTS(text = text, lang = 'ru', slow = 'false')
-    speech.save('tg_bot\speech.mp3')
-    bot.send_audio(cid, open('tg_bot\speech.mp3', 'rb'))
+    speech.save('speech.mp3')
+    bot.send_audio(cid, open('speech.mp3', 'rb'))
+
+@bot.message_handler(commands=['all'])
+def all(message):
+    bot.reply_to(message, "@Torch_head @PlatypusWithHat  @ferrnot @kirushahuesos")
+    
 
 
 @bot.message_handler(commands=['joke'])
@@ -63,7 +71,7 @@ def download_from_tiktok(message):
     url = "https://tiktok-downloader-download-tiktok-videos-without-watermark.p.rapidapi.com/index"
     querystring = {"url":link}
     headers = {
-        "X-RapidAPI-Key": config.X-RapidAPI-Key,
+        "X-RapidAPI-Key": config.X_RapidAPI_Key,
         "X-RapidAPI-Host": "tiktok-downloader-download-tiktok-videos-without-watermark.p.rapidapi.com"
     }
     response = requests.request("GET", url, headers=headers, params=querystring)
@@ -72,6 +80,20 @@ def download_from_tiktok(message):
     urllib.request.urlretrieve(response.json()['video'][0], 'tt_video.mp4')
     cid = message.chat.id
     bot.send_video(cid, open('tt_video.mp4', 'rb'))
+
+@bot.message_handler(commands=['cat'])
+def send_cat(message):
+    cid = message.chat.id
+    a = 1
+    if (random.randint(1,2) == 1):
+        url = 'https://cataas.com/cat/gif'
+        urllib.request.urlretrieve(url, 'cat_gif.gif')
+        bot.send_video(cid, open('cat_gif.gif', 'rb'))
+    else:
+        url = 'https://cataas.com/cat'
+        urllib.request.urlretrieve(url, 'cat_photo.jpeg')
+        bot.send_photo(cid, open('cat_photo.jpeg', 'rb'))      
+
 
 
 
