@@ -1,4 +1,4 @@
-import config  # Тут  были Кирилл, Семён и Егор5
+import config 
 from doctest import OutputChecker
 from urllib import response
 import telebot
